@@ -7,13 +7,23 @@ type Company struct {
 	establishDate string
 }
 
-func NewIdolCompany(name string) *Company {
-	return &Company{
-		name:          name,
+type Option func(*Company)
+
+func NewIdolCompany(opts ...Option) *Company {
+	c := &Company{
+		name:          "default",
 		local:         make([]string, 0),
 		team:          make([]string, 0),
 		establishDate: "",
 	}
+	for _, opt := range opts {
+		opt(c)
+	}
+	return c
+}
+
+func (c *Company) SetName(name string) {
+	c.name = name
 }
 
 func (c *Company) GetName() string {

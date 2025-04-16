@@ -4,10 +4,15 @@ import (
 	"fmt"
 	"go-review/Company"
 	"go-review/Idol"
+	"go-review/Option"
+	"go-review/Test"
 	"strings"
 )
 
 func main() {
+	defer func() {
+		fmt.Print("语法基础Done\n")
+	}()
 	manager := Idol.NewIdolManager()
 	idol1 := Idol.NewIdol("略略", 20, "采梦", "凌晨十二点")
 	idol2 := Idol.NewIdol("小鱼", 20, "采梦", "凌晨十二点")
@@ -27,7 +32,10 @@ func main() {
 	}
 
 	// 公司信息
-	company := Company.NewIdolCompany("凌晨十二点")
+	// company := Company.NewIdolCompany("凌晨十二点")
+	company := Company.NewIdolCompany(
+		Option.WithCompanyName("凌晨十二点"),
+	)
 	builder := strings.Builder{}
 	builder.WriteString("2019-05-23")
 	builder.WriteString(" 18:00:00")
@@ -39,5 +47,22 @@ func main() {
 	for index, team := range company.GetTeam() {
 		fmt.Printf("%d  团队:%v\n", index, team)
 	}
-
+	companyMg := Company.NewCompanyManager()
+	companyMg.AddCompany(company)
+	compangAll := companyMg.GetAllCompanies()
+	teamDone := make([][]string, 0, 1024)
+	for _, comp := range compangAll {
+		teamDone = append(teamDone, comp.GetTeam())
+	}
+	fmt.Println(teamDone)
+	teamDoneList := make([]string, 0)
+	for _, team := range teamDone {
+		// ... 展开切片，将多个切片合并为一个切片
+		teamDoneList = append(teamDoneList, team...)
+	}
+	fmt.Println(teamDoneList)
+	teamDoneList = teamDoneList[:1]
+	fmt.Println(teamDoneList)
+	Test.Test_chan()
+	Test.Test_string()
 }
