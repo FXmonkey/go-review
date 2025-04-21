@@ -31,7 +31,12 @@ func (c *Company) GetName() string {
 }
 
 func (c *Company) GetLocal() []string {
-	return c.local
+	if c.local == nil {
+		return []string{}
+	}
+	localCopy := make([]string, len(c.local))
+	copy(localCopy, c.local)
+	return localCopy
 }
 
 func (c *Company) GetTeam() []string {
