@@ -70,3 +70,26 @@ func Test_string() {
 	dst := strings.Clone(s)
 	fmt.Println("dst:", dst)
 }
+
+type Queue[T any] []T
+
+func NewQueue[T any]() *Queue[T] {
+	return &Queue[T]{}
+}
+
+func (q *Queue[T]) Push(e T) {
+	*q = append(*q, e)
+}
+
+func (q *Queue[T]) Pop() (_ T) {
+	if len(*q) == 0 {
+		panic("queue is empty") // 或返回 error
+	}
+	res := (*q)[0]
+	*q = (*q)[1:]
+	return res
+}
+
+func (q *Queue[T]) ShowQueue() *Queue[T] {
+	return q
+}

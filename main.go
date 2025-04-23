@@ -65,4 +65,14 @@ func main() {
 	fmt.Println(teamDoneList)
 	Test.Test_chan()
 	Test.Test_string()
+
+	// 泛型
+	q_int := Test.NewQueue[int]()
+	q_int.Push(2)
+	q_int.Push(1)
+	fmt.Printf("Pop 队列值为%v\n", q_int.Pop())
+	fmt.Printf("现在队列为\n")
+	for _, s := range *q_int.ShowQueue() {
+		fmt.Printf("value = %v ", s)
+	}
 }
